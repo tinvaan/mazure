@@ -7,13 +7,13 @@ from datetime import datetime
 class StorageAccount(db.Document):
     tags = db.DictField()
     name = db.StringField(required=True)
-    rgroup = db.StringField(required=True)
-    tenant = db.StringField(required=True)
     location = db.StringField(required=True)
     kind = db.StringField(default='StorageV2')
     subscription = db.StringField(required=True)
+    resourceGroup = db.StringField(required=True)
     rid = db.StringField(required=True, unique=True)
-    rtype = db.StringField(default='Microsoft.Storage/storageAccounts')
+    tenant = db.StringField(required=True, default='test')
+    type = db.StringField(default='Microsoft.Storage/storageAccounts')
     sku = db.DictField(default={'name': 'Standard_RAGRS', 'tier': 'Standard'})
     properties = db.DictField(default={
         "networkAcls": {
@@ -56,5 +56,12 @@ class StorageAccount(db.Document):
         }
     })
 
+    meta = {'collection': 'resources'}
+
     def __repr__(self):
         return "StorageAccount(%s)" % self.rid
+
+    def save(self, *args, **kwargs):
+        self.rid = '/subscriptions/%s/resourceGroups/%s/providers/%s/%s' % (
+            self.subscription, self.resourceGroup, self.type, self.name)
+        super().save(args, kwargs)
