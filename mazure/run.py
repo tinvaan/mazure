@@ -1,4 +1,13 @@
 
-from services import app
+from .services import app
+from .proxy import GlobalProxy
 
-app.run(host='0.0.0.0', debug=True)
+
+GlobalProxy.enable('http://%s:%s' % (
+    app.config.get('MAZURE_SERVER'), app.config.get('MAZURE_PORT')))
+
+app.run(
+    debug=True,
+    port=app.config.get('MAZURE_PORT'),
+    host=app.config.get('MAZURE_SERVER')
+)
