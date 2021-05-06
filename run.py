@@ -1,6 +1,6 @@
 
-from .services import app
-from .proxy import GlobalProxy
+from mazure.services import app
+from mazure.proxy import GlobalProxy
 
 
 GlobalProxy.enable('http://%s:%s' % (
