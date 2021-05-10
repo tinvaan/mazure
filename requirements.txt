@@ -1,5 +1,6 @@
 flask-mongoengine==1.0.0
 mongoengine==0.22.1
+responses==0.13.3
 mongomock==3.22.1
 pymongo==3.11.3
 Flask==1.1.2
