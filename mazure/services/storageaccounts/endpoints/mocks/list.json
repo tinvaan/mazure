@@ -1,0 +1,147 @@
+{
+    "status": 200,
+    "headers": {
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Encoding": "gzip",
+        "Expires": "-1",
+        "Vary": "Accept-Encoding",
+        "x-ms-original-request-ids": "1b751f81-3452-401d-ad9d-41ee185c23e9, 162218ed-e5a2-442a-abab-36850e854e8d, 8622da85-a772-4274-9305-3f8cd9c29d39",
+        "x-ms-ratelimit-remaining-subscription-reads": "11909",
+        "x-ms-request-id": "16807962-d1e9-4d15-93ac-f1327818efbb",
+        "x-ms-correlation-request-id": "16807962-d1e9-4d15-93ac-f1327818efbb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20210514T181020Z:16807962-d1e9-4d15-93ac-f1327818efbb",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "Date": "Fri, 14 May 2021 18:10:20 GMT",
+        "Content-Length": "1669"
+    },
+    "body": {
+        "value": [
+            {
+                "sku": {
+                    "name": "Standard_RAGRS",
+                    "tier": "Standard"
+                },
+                "kind": "StorageV2",
+                "id": "/subscriptions/24d61f39-b4be-4ada-a91d-0d6b451477c8/resourceGroups/vaibhav/providers/Microsoft.Storage/storageAccounts/vaibhavsa",
+                "name": "vaibhavsa",
+                "type": "Microsoft.Storage/storageAccounts",
+                "location": "eastus",
+                "tags": {},
+                "properties": {
+                    "privateEndpointConnections": [],
+                    "minimumTlsVersion": "TLS1_2",
+                    "allowBlobPublicAccess": true,
+                    "networkAcls": {
+                        "bypass": "AzureServices",
+                        "virtualNetworkRules": [],
+                        "ipRules": [],
+                        "defaultAction": "Allow"
+                    },
+                    "supportsHttpsTrafficOnly": true,
+                    "encryption": {
+                        "services": {
+                            "file": {
+                                "keyType": "Account",
+                                "enabled": true,
+                                "lastEnabledTime": "2020-10-20T08:12:10.6103426Z"
+                            },
+                            "blob": {
+                                "keyType": "Account",
+                                "enabled": true,
+                                "lastEnabledTime": "2020-10-20T08:12:10.6103426Z"
+                            }
+                        },
+                        "keySource": "Microsoft.Storage"
+                    },
+                    "accessTier": "Hot",
+                    "provisioningState": "Succeeded",
+                    "creationTime": "2020-10-20T08:12:10.5166061Z",
+                    "primaryEndpoints": {
+                        "dfs": "https://vaibhavsa.dfs.core.windows.net/",
+                        "web": "https://vaibhavsa.z13.web.core.windows.net/",
+                        "blob": "https://vaibhavsa.blob.core.windows.net/",
+                        "queue": "https://vaibhavsa.queue.core.windows.net/",
+                        "table": "https://vaibhavsa.table.core.windows.net/",
+                        "file": "https://vaibhavsa.file.core.windows.net/"
+                    },
+                    "primaryLocation": "eastus",
+                    "statusOfPrimary": "available",
+                    "secondaryLocation": "westus",
+                    "statusOfSecondary": "available",
+                    "secondaryEndpoints": {
+                        "dfs": "https://vaibhavsa-secondary.dfs.core.windows.net/",
+                        "web": "https://vaibhavsa-secondary.z13.web.core.windows.net/",
+                        "blob": "https://vaibhavsa-secondary.blob.core.windows.net/",
+                        "queue": "https://vaibhavsa-secondary.queue.core.windows.net/",
+                        "table": "https://vaibhavsa-secondary.table.core.windows.net/"
+                    }
+                }
+            },
+            {
+                "sku": {
+                    "name": "Standard_RAGRS",
+                    "tier": "Standard"
+                },
+                "kind": "BlobStorage",
+                "id": "/subscriptions/24d61f39-b4be-4ada-a91d-0d6b451477c8/resourceGroups/vgs-rg/providers/Microsoft.Storage/storageAccounts/vgssca",
+                "name": "vgssca",
+                "type": "Microsoft.Storage/storageAccounts",
+                "location": "eastus",
+                "tags": {},
+                "properties": {
+                    "privateEndpointConnections": [],
+                    "routingPreference": {
+                        "routingChoice": "InternetRouting",
+                        "publishMicrosoftEndpoints": false,
+                        "publishInternetEndpoints": false
+                    },
+                    "minimumTlsVersion": "TLS1_2",
+                    "allowBlobPublicAccess": true,
+                    "allowSharedKeyAccess": false,
+                    "networkAcls": {
+                        "bypass": "AzureServices",
+                        "virtualNetworkRules": [],
+                        "ipRules": [],
+                        "defaultAction": "Allow"
+                    },
+                    "supportsHttpsTrafficOnly": false,
+                    "encryption": {
+                        "services": {
+                            "file": {
+                                "keyType": "Account",
+                                "enabled": true,
+                                "lastEnabledTime": "2021-04-12T07:19:01.1342075Z"
+                            },
+                            "blob": {
+                                "keyType": "Account",
+                                "enabled": true,
+                                "lastEnabledTime": "2021-04-12T07:19:01.1342075Z"
+                            }
+                        },
+                        "keySource": "Microsoft.Storage"
+                    },
+                    "accessTier": "Hot",
+                    "provisioningState": "Succeeded",
+                    "creationTime": "2021-04-12T07:19:01.0404445Z",
+                    "primaryEndpoints": {
+                        "dfs": "https://vgssca.dfs.core.windows.net/",
+                        "blob": "https://vgssca.blob.core.windows.net/",
+                        "table": "https://vgssca.table.core.windows.net/"
+                    },
+                    "primaryLocation": "eastus",
+                    "statusOfPrimary": "available",
+                    "secondaryLocation": "westus",
+                    "statusOfSecondary": "available",
+                    "secondaryEndpoints": {
+                        "dfs": "https://vgssca-secondary.dfs.core.windows.net/",
+                        "blob": "https://vgssca-secondary.blob.core.windows.net/",
+                        "table": "https://vgssca-secondary.table.core.windows.net/"
+                    }
+                }
+            }
+        ]
+    }
+}
