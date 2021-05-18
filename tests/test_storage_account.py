@@ -5,11 +5,14 @@ import unittest
 
 from azure.identity import ClientSecretCredential
 from azure.mgmt.storage import StorageManagementClient
-from azure.mgmt.storage.models import StorageAccountCheckNameAvailabilityParameters
+from azure.mgmt.storage.models import (
+    StorageAccountCheckNameAvailabilityParameters
+)
 
-from mazure.services.storageaccounts import StorageAccountProxy
+from mazure.proxy import AzureInterceptor as AzureProxy
 
 
+@unittest.skip('Used for debugging request/responses')
 class TestStorageAccounts(unittest.TestCase):
     @vcr.use_cassette('/tmp/azure/auth.yaml')
     @classmethod
@@ -28,9 +31,11 @@ class TestStorageAccounts(unittest.TestCase):
     @vcr.use_cassette('/tmp/azure/sa.name.yaml')
     def test_check_storage_account_name(self):
         valid = StorageAccountCheckNameAvailabilityParameters(name='foobarsa')
-        self.assertTrue(
-            self.client.storage_accounts
-                .check_name_availability(valid).name_available)
+        invalid = StorageAccountCheckNameAvailabilityParameters(name='rampupsa')
+        self.assertTrue(self.client.storage_accounts
+                        .check_name_availability(valid).name_available)
+        self.assertFalse(self.client.storage_accounts
+                         .check_name_availability(invalid).name_available)
 
     @vcr.use_cassette('/tmp/azure/sa.yaml')
     def test_list_storage_accounts(self):
@@ -58,28 +63,18 @@ class TestStorageAccountProxy(unittest.TestCase):
         self.assertIsNotNone(self.client)
 
     def test_list_storage_accounts(self):
-        with StorageAccountProxy():
+        with AzureProxy():
             for account in self.client.storage_accounts.list():
                 self.assertIsNotNone(account)
 
     def test_check_storage_account_name(self):
         valid = StorageAccountCheckNameAvailabilityParameters(name='foobarsa')
         invalid = StorageAccountCheckNameAvailabilityParameters(name='rampupsa')
-
-        self.assertTrue(
-            self.client.storage_accounts
-                .check_name_availability(valid).name_available)
-        self.assertFalse(
-            self.client.storage_accounts
-                .check_name_availability(invalid).name_available)
-
-        with StorageAccountProxy():
-            self.assertTrue(
-                self.client.storage_accounts
-                    .check_name_availability(valid).name_available)
-            self.assertTrue(
-                self.client.storage_accounts
-                    .check_name_availability(invalid).name_available)
+        with AzureProxy():
+            self.assertTrue(self.client.storage_accounts
+                            .check_name_availability(valid).name_available)
+            self.assertTrue(self.client.storage_accounts
+                            .check_name_availability(invalid).name_available)
 
 
 if __name__ == '__main__':
