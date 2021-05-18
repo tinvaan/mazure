@@ -4,12 +4,15 @@ import vcr
 import unittest
 
 from azure.identity import ClientSecretCredential
+from azure.core.exceptions import HttpResponseError
 from azure.mgmt.storage import StorageManagementClient
 from azure.mgmt.storage.models import (
+    StorageAccountCreateParameters,
     StorageAccountCheckNameAvailabilityParameters
 )
 
 from mazure.proxy import AzureInterceptor as AzureProxy
+from mazure.services.storageaccounts.models import StorageAccount
 
 
 @unittest.skip('Used for debugging request/responses')
@@ -75,6 +78,25 @@ class TestStorageAccountProxy(unittest.TestCase):
                             .check_name_availability(valid).name_available)
             self.assertTrue(self.client.storage_accounts
                             .check_name_availability(invalid).name_available)
+
+    def test_create_storage_account(self):
+        self.assertEqual(StorageAccount.objects.count(), 0)
+        with AzureProxy():
+            kws = {
+                "sku": {"name": "Premium_LRS"},
+                "kind": "BlockBlobStorage",
+                "location": "eastus",
+            }
+            self.client.storage_accounts.begin_create(
+                'testrg', 'testaccount', StorageAccountCreateParameters(**kws))
+            self.assertEqual(StorageAccount.objects.count(), 1)
+            self.assertIsNotNone(
+                StorageAccount.objects.get(name='testaccount'))
+
+            with self.assertRaises(HttpResponseError):
+                self.client.storage_accounts.begin_create(
+                    'testrg', 'testaccount', StorageAccountCreateParameters(**kws))
+                self.assertEqual(StorageAccount.objects.count(), 1)
 
 
 if __name__ == '__main__':

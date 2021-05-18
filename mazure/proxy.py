@@ -46,6 +46,9 @@ class AzureInterceptor:
         if request.method == 'POST':
             response = self.client.post(
                 self.host + request.path_url, data=request.body)
+        if request.method == 'PUT':
+            response = self.client.put(
+                self.host + request.path_url, data=request.body)
         return (
             response.status_code,
             dict(response.headers),

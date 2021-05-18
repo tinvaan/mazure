@@ -1,6 +1,7 @@
 
 from .models import StorageAccount
 
+from json import loads
 from flask import Blueprint, request, jsonify, make_response
 from mongoengine.errors import ValidationError, FieldDoesNotExist
 
@@ -74,10 +75,9 @@ def create_storage_account(subId, rgroup, accountName):
             'subscription': subId,
             'resourceGroup': rgroup
         })
-        StorageAccount(**params).save()
-        return StorageAccount.objects.get(
-            name=accountName, subscription=subId, resourceGroup=rgroup
-        ).to_json()
+        account = StorageAccount(**params)
+        account.save()
+        return jsonify(loads(account.to_json()))
     except AssertionError as err:
         return make_response(jsonify({'error': str(err)}), 400)
     except (FieldDoesNotExist, ValidationError):
