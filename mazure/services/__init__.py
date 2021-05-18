@@ -26,6 +26,8 @@ def logit(response):
 
 
 with app.app_context():
+    from .identity.views import auth
     from .storageaccounts.views import sa
 
+    app.register_blueprint(auth)
     app.register_blueprint(sa, url_prefix='/subscriptions')

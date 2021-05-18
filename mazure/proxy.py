@@ -1,29 +1,10 @@
 
-import os
 import re
+import json
 import responses
 
 
-class GlobalProxy:
-    @staticmethod
-    def enable(url):
-        os.environ.update({
-            'http_proxy': url,
-            'https_proxy': url,
-            'HTTP_PROXY': url,
-            'HTTPS_PROXY': url
-        })
-
-    @staticmethod
-    def disable(app):
-        if 'http_proxy' in os.environ.keys():
-            os.environ.pop('http_proxy')
-        if 'https_proxy' in os.environ.keys():
-            os.environ.pop('https_proxy')
-        if 'HTTP_PROXY' in os.environ.keys():
-            os.environ.pop('HTTP_PROXY')
-        if 'HTTPS_PROXY' in os.environ.keys():
-            os.environ.pop('HTTPS_PROXY')
+from .services import app
 
 
 class AzureInterceptor:
@@ -35,6 +16,9 @@ class AzureInterceptor:
 
     def __init__(self):
         self.http = responses.mock
+        self.client = app.test_client()
+        self.host = 'http://%s:%s' % (
+            app.config.get('MAZURE_SERVER'), app.config.get('MAZURE_PORT'))
 
     def __enter__(self, *args, **kwargs):
         self.setup()
@@ -57,4 +41,13 @@ class AzureInterceptor:
         self.http.reset()
 
     def callback(self, request):
-        raise NotImplementedError('Subclass responsibility')
+        if request.method == 'GET':
+            response = self.client.get(self.host + request.path_url)
+        if request.method == 'POST':
+            response = self.client.post(
+                self.host + request.path_url, data=request.body)
+        return (
+            response.status_code,
+            dict(response.headers),
+            json.dumps(response.get_json())
+        )
