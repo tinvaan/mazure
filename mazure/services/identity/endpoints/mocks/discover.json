@@ -1,0 +1,59 @@
+{
+    "status": 200,
+    "headers": {
+        "Cache-Control": "max-age=86400, private",
+        "Content-Length": "945",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "P3P": "CP='DSP CUR OTPi IND OTRi ONL FIN'",
+        "x-ms-request-id": "96bcad97-709f-4533-9955-cb1292f5cb00",
+        "x-ms-ests-server": "2.1.11654.25 - SEASLR1 ProdSlices",
+        "Set-Cookie": "fpc=Ah_8TmrSCnxIjDFXS_AO6_8; expires=Sun, 13-Jun-2021 11:33:57 GMT; path=/; secure; HttpOnly; SameSite=None, esctx=AQABAAAAAAD--DLA3VO7QrddgJg7WevrXgefkMHUzYar92QtP00ImyqYE7vBNWonyIsVDFlrdKkcj1Y_uqMFRuoX9L9TuEWsbMX8Mq4xZ_M7DfQ1IIgyqmhJaiqwBMJJuerye4Sy6-BVLh2DlsviJQX18s_kvrA6wtYQ_PsaBsV-tNBecQnaN7CyCKFbtxaKO_16mQl6w5QgAA; domain=.login.microsoftonline.com; path=/; secure; HttpOnly; SameSite=None, x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly, stsservicecookie=estsfd; path=/; secure; samesite=none; httponly",
+        "Date": "Fri, 14 May 2021 11:33:56 GMT"
+    },
+    "body": {
+        "tenant_discovery_endpoint": "https://login.microsoftonline.com/common/.well-known/openid-configuration",
+        "api-version": "1.1",
+        "metadata": [
+            {
+                "preferred_network": "login.microsoftonline.com",
+                "preferred_cache": "login.windows.net",
+                "aliases": [
+                    "login.microsoftonline.com",
+                    "login.windows.net",
+                    "login.microsoft.com",
+                    "sts.windows.net"
+                ]
+            },
+            {
+                "preferred_network": "login.partner.microsoftonline.cn",
+                "preferred_cache": "login.partner.microsoftonline.cn",
+                "aliases": [
+                    "login.partner.microsoftonline.cn",
+                    "login.chinacloudapi.cn"
+                ]
+            },
+            {
+                "preferred_network": "login.microsoftonline.de",
+                "preferred_cache": "login.microsoftonline.de",
+                "aliases": ["login.microsoftonline.de"]
+            },
+            {
+                "preferred_network": "login.microsoftonline.us",
+                "preferred_cache": "login.microsoftonline.us",
+                "aliases": [
+                    "login.microsoftonline.us",
+                    "login.usgovcloudapi.net"
+                ]
+            },
+            {
+                "preferred_network": "login-us.microsoftonline.com",
+                "preferred_cache": "login-us.microsoftonline.com",
+                "aliases": ["login-us.microsoftonline.com"]
+            }
+        ]
+    }
+}
