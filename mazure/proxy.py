@@ -3,11 +3,10 @@ import re
 import json
 import responses
 
-
 from .services import app
 
 
-class AzureInterceptor:
+class AzureProxy:
     HOSTS = [
         "https://management.azure.com",
         "https://login.microsoftonline.com"

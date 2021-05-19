@@ -11,7 +11,7 @@ from azure.mgmt.storage.models import (
     StorageAccountCheckNameAvailabilityParameters
 )
 
-from mazure.proxy import AzureInterceptor as AzureProxy
+from mazure.proxy import AzureProxy
 from mazure.services.storageaccounts.models import StorageAccount
 
 
