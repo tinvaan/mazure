@@ -3,8 +3,8 @@ import os
 import vcr
 import unittest
 
+from mongoengine.errors import NotUniqueError
 from azure.identity import ClientSecretCredential
-from azure.core.exceptions import HttpResponseError
 from azure.mgmt.storage import StorageManagementClient
 from azure.mgmt.storage.models import (
     StorageAccountCreateParameters,
@@ -93,10 +93,22 @@ class TestStorageAccountProxy(unittest.TestCase):
             self.assertIsNotNone(
                 StorageAccount.objects.get(name='testaccount'))
 
-            with self.assertRaises(HttpResponseError):
+            with self.assertRaises(NotUniqueError):
                 self.client.storage_accounts.begin_create(
                     'testrg', 'testaccount', StorageAccountCreateParameters(**kws))
                 self.assertEqual(StorageAccount.objects.count(), 1)
+
+    def test_delete_storage_account(self):
+        self.assertEqual(StorageAccount.objects.count(), 1)
+        with AzureProxy():
+            self.client.storage_accounts.delete(
+                account_name='testaccount', resource_group_name='testrg')
+            self.assertEqual(StorageAccount.objects.count(), 0)
+
+            # TODO: Should this fail silently?
+            self.client.storage_accounts.delete(
+                account_name='nonexistent', resource_group_name='testrg')
+            self.assertEqual(StorageAccount.objects.count(), 0)
 
 
 if __name__ == '__main__':

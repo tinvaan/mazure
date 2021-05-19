@@ -101,8 +101,8 @@ def delete_storage_account(subId, rgroup, accountName):
             subscription=subId, resourceGroup=rgroup, name=accountName)
         account.delete()
     except StorageAccount.DoesNotExist:
-        return make_response(jsonify(), 204)
-    return jsonify()
+        return ('', 204)
+    return jsonify(loads(account.to_json()))
 
 
 @sa.route('%s/%s/<accountName>/failover' % (prefix, provider), methods=['POST'])

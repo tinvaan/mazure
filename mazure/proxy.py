@@ -43,12 +43,15 @@ class AzureInterceptor:
     def callback(self, request):
         if request.method == 'GET':
             response = self.client.get(self.host + request.path_url)
+        if request.method == 'DELETE':
+            response = self.client.delete(self.host + request.path_url)
         if request.method == 'POST':
             response = self.client.post(
                 self.host + request.path_url, data=request.body)
         if request.method == 'PUT':
             response = self.client.put(
                 self.host + request.path_url, data=request.body)
+
         return (
             response.status_code,
             dict(response.headers),

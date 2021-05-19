@@ -4,8 +4,8 @@ import unittest
 from mongoengine import get_db, connect, disconnect
 
 from .loader import Env
-from services import app
-from services.storageaccounts.models import StorageAccount
+from mazure.services import app
+from mazure.services.storageaccounts.models import StorageAccount
 
 
 class TestStorageAccountViews(unittest.TestCase):
