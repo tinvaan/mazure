@@ -15,13 +15,13 @@
         "Content-Length": "1651"
     },
     "body": {
-        "token_endpoint": "https://login.microsoftonline.com/2193f4ca-f7b7-4a1b-8449-b76d1873d8e7/oauth2/v2.0/token",
+        "token_endpoint": "https://login.microsoftonline.com/f2b5fff9-6c2e-45c0-8e9e-0d738ea0a87e/oauth2/v2.0/token",
         "token_endpoint_auth_methods_supported": [
             "client_secret_post",
             "private_key_jwt",
             "client_secret_basic"
         ],
-        "jwks_uri": "https://login.microsoftonline.com/2193f4ca-f7b7-4a1b-8449-b76d1873d8e7/discovery/v2.0/keys",
+        "jwks_uri": "https://login.microsoftonline.com/f2b5fff9-6c2e-45c0-8e9e-0d738ea0a87e/discovery/v2.0/keys",
         "response_modes_supported": [
             "query",
             "fragment",
@@ -41,14 +41,14 @@
             "email",
             "offline_access"
         ],
-        "issuer": "https://login.microsoftonline.com/2193f4ca-f7b7-4a1b-8449-b76d1873d8e7/v2.0",
+        "issuer": "https://login.microsoftonline.com/f2b5fff9-6c2e-45c0-8e9e-0d738ea0a87e/v2.0",
         "request_uri_parameter_supported": false,
         "userinfo_endpoint": "https://graph.microsoft.com/oidc/userinfo",
-        "authorization_endpoint": "https://login.microsoftonline.com/2193f4ca-f7b7-4a1b-8449-b76d1873d8e7/oauth2/v2.0/authorize",
-        "device_authorization_endpoint": "https://login.microsoftonline.com/2193f4ca-f7b7-4a1b-8449-b76d1873d8e7/oauth2/v2.0/devicecode",
+        "authorization_endpoint": "https://login.microsoftonline.com/f2b5fff9-6c2e-45c0-8e9e-0d738ea0a87e/oauth2/v2.0/authorize",
+        "device_authorization_endpoint": "https://login.microsoftonline.com/f2b5fff9-6c2e-45c0-8e9e-0d738ea0a87e/oauth2/v2.0/devicecode",
         "http_logout_supported": true,
         "frontchannel_logout_supported": true,
-        "end_session_endpoint": "https://login.microsoftonline.com/2193f4ca-f7b7-4a1b-8449-b76d1873d8e7/oauth2/v2.0/logout",
+        "end_session_endpoint": "https://login.microsoftonline.com/f2b5fff9-6c2e-45c0-8e9e-0d738ea0a87e/oauth2/v2.0/logout",
         "claims_supported": [
             "sub",
             "iss",

@@ -1,0 +1,24 @@
+{
+    "status": 200,
+    "headers": {
+        "Cache-Control": "no-store, no-cache",
+        "Pragma": "no-cache",
+        "Content-Type": "application/json; charset=utf-8",
+        "Expires": "-1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "P3P": "CP='DSP CUR OTPi IND OTRi ONL FIN'",
+        "client-request-id": "4d78612c-64e1-4609-8160-44784792942f",
+        "x-ms-request-id": "ff2f4750-b600-4d0b-b9f2-b24238a2e416",
+        "x-ms-ests-server": "2.1.11722.21 - WUS2 ProdSlices",
+        "x-ms-clitelem": "1,0,0,,",
+        "Set-Cookie": "fpc=AguNVSI_WW9GoGUULTe7QM2Psu5nAQAAAB9YMNgOAAAA; expires=Sun, 13-Jun-2021 11:38:07 GMT; path=/; secure; HttpOnly; SameSite=None, x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly, stsservicecookie=estsfd; path=/; secure; samesite=none; httponly",
+        "Date": "Fri, 14 May 2021 11:38:06 GMT", "Content-Length": "1349"
+    },
+    "body": {
+        "token_type": "Bearer",
+        "expires_in": 3599,
+        "ext_expires_in": 3599,
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZjJiNWZmZjktNmMyZS00NWMwLThlOWUtMGQ3MzhlYTBhODdlLyIsImlhdCI6MTYyMDk5MTk4NywibmJmIjoxNjIwOTkxOTg3LCJleHAiOjE2MjQwMTE3MDcsImFpbyI6IjBmUmpVUG5QTHFBVkY0TzZ4cUdTejRBQTFwMmZyTVpnbi1ZRXhLZGM4ZWMiLCJhcHBpZCI6IjVkMTQ0MWRiLTllNDgtNDU1ZC05ZGIzLWEyMDQ0YjNjNjE5ZiIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0L2YyYjVmZmY5LTZjMmUtNDVjMC04ZTllLTBkNzM4ZWEwYTg3ZS8iLCJvaWQiOiJmZGViYzkwMy04NGM2LTQxZDMtYmVjZS0yMDFjZWMzNjYwOTMiLCJyaCI6IjAuQVZrQXl2U1RJYmYzRzBxRVNiZHRHSFBZNXd0OFJqaXpJT3RPdktsN0tpNjlGdVJaQUFBLiIsInN1YiI6IjNhNDZkYWU4LTU4YmQtNGQyMC1iNTFiLWVlMGJlYjU5MTQ1YyIsInRpZCI6ImQ2M2ZiZmNhLTI0OWEtNDg4MS1hNTgzLTdlNGQ2ZThmNjkzMiIsInV0aSI6ImVhNTgwMTk1ZjMxYjhjNjI4NDYyMTNkN2ExNWRhY2RkZTdhZTBiMTZjZGM0N2Q1NjkyMmZmNTRlMGIyNGVhMWQiLCJ2ZXIiOiIxLjAiLCJ4bXNfdGNkdCI6MTU5NTYyNDE4MCwianRpIjoiZGY2MWZiYmYtYmZhMy00MWQzLTg0MzMtOWQ1YTg1NDU1ZGY2In0.wQz3uy7ZTrq3dJotzgvtm0f6ssIXrBodSzgdMyFKO-k"
+    }
+}

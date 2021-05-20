@@ -1,7 +1,7 @@
 
 from flask import jsonify, make_response, Blueprint
 
-from .endpoints import read
+from .models import read
 
 
 auth = Blueprint('identity', __name__)
