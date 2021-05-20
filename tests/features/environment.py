@@ -1,5 +1,4 @@
 
-from mazure.services.storageaccounts.models import StorageAccount
 import os
 
 from azure.identity import ClientSecretCredential
