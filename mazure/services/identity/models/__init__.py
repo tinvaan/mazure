@@ -17,5 +17,5 @@ def body(mockname):
 
 
 def read(mockname):
-    with open(join(dirname(__file__), 'mocks', mockname + '.json'), 'r') as f:
+    with open(join(dirname(__file__), 'responses', mockname + '.json'), 'r') as f:
         return json.load(f)
