@@ -72,21 +72,21 @@ class TestVirtualMachineViews(unittest.TestCase):
         r = self.app.get(
             '%s/resourceGroups/xyz/%s' % (self.url, self.provider))
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(len(r.get_json()), 0)
+        self.assertEqual(len(r.get_json().get('value')), 0)
 
         r = self.app.get(
             '%s/resourceGroups/testrg/%s' % (self.url, self.provider))
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(len(r.get_json()), 2)
+        self.assertEqual(len(r.get_json().get('value')), 2)
 
     def test_list_vms_per_subscription(self):
         r = self.app.get('%s/subscriptions/xyz/%s' % (self.env.host, self.provider))
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(len(r.get_json()), 0)
+        self.assertEqual(len(r.get_json().get('value')), 0)
 
         r = self.app.get('%s/%s' % (self.url, self.provider))
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(len(r.get_json()), 2)
+        self.assertEqual(len(r.get_json().get('value')), 2)
 
     def tearDown(self):
         self.db.drop_collection('resources')

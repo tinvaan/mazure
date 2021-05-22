@@ -7,6 +7,6 @@ msrestazure==0.6.4
 azure-core==1.11.0
 azure-common==1.1.26
 azure-identity==1.5.0
-azure-mgmt-compute==20.0.0
 azure-mgmt-core==1.2.2
+azure-mgmt-compute==20.0.0
 azure-mgmt-storage==17.0.0
