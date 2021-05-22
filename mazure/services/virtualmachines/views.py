@@ -65,7 +65,7 @@ def list_vms_per_rg(subId, rgroup):
     # TODO: Add pagination(nextLink) support
     machines = VirtualMachine.objects.filter(
         subscription=subId, resourceGroup=rgroup).to_json()
-    return jsonify(loads(machines))
+    return jsonify({'value': loads(machines)})
 
 
 @vm.route('<subId>/%s' % provider)
@@ -78,4 +78,4 @@ def list_vms_per_subscription(subId):
     """
     # TODO: Add pagination(nextLink) support
     machines = VirtualMachine.objects.filter(subscription=subId).to_json()
-    return jsonify(loads(machines))
+    return jsonify({'value': loads(machines)})
