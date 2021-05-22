@@ -1,6 +1,7 @@
 
 import json
 
+from datetime import datetime
 from os.path import join, dirname
 
 
@@ -18,4 +19,8 @@ def body(mockname):
 
 def read(mockname):
     with open(join(dirname(__file__), 'responses', mockname + '.json'), 'r') as f:
-        return json.load(f)
+        data = json.load(f)
+        data.get('headers').update({
+            'Date': datetime.now().strftime("%a, %d %b %Y %H:%M:%S %Z")
+        })
+        return data
