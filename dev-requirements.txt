@@ -1,6 +1,12 @@
+tox==3.23.1
 vcrpy==4.1.1
 behave==1.2.6
 pytest==6.2.2
 pytest-sugar==0.9.4
 msrestazure==0.6.4
+azure-core==1.11.0
+azure-common==1.1.26
+azure-identity==1.5.0
+azure-mgmt-compute==20.0.0
+azure-mgmt-core==1.2.2
 azure-mgmt-storage==17.0.0
