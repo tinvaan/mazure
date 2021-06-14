@@ -1,0 +1,23 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: test
+    image: harishnavnit/mazure
+    environment:
+      AZURE_CLIENT_ID:
+        from_secret: AZURE_CLIENT_ID
+      AZURE_SECRET_KEY:
+        from_secret: AZURE_SECRET_KEY
+      AZURE_TENANT_ID:
+        from_secret: AZURE_TENANT_ID
+      AZURE_TENANT_NAME:
+        from_secret: AZURE_TENANT_ID
+      AZURE_SUBSCRIPTION_ID:
+        from_secret: AZURE_SUBSCRIPTION_ID
+      AZURE_SUBSCRIPTION_NAME:
+        from_secret: AZURE_SUBSCRIPTION_NAME
+    commands:
+      - pip install -r dev-requirements.txt
+      - tox -e py37
