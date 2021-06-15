@@ -103,7 +103,7 @@ class StorageAccount(db.Document):
         "supportsHttpsTrafficOnly": False
     })
 
-    meta = {'collection': 'resources'}
+    meta = {'collection': 'storageaccounts'}
 
     def __repr__(self):
         return "StorageAccount(%s)" % self.rid
