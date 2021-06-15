@@ -61,7 +61,7 @@ class StorageAccount(db.Document):
         }
     })
 
-    meta = {'collection': 'resources'}
+    meta = {'collection': 'storageaccounts'}
 
     def __repr__(self):
         return "StorageAccount(%s)" % self.rid

@@ -111,7 +111,7 @@ class VirtualMachine(db.Document):
         "provisioningState": "Succeeded"
     })
 
-    meta = {'collection': 'resources'}
+    meta = {'collection': 'virtualmachines'}
 
     def __repr__(self):
         return "VirtualMachine(%s)" % self.rid
