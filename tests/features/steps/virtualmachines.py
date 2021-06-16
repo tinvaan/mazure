@@ -33,6 +33,18 @@ def step_impl(context):
             vm.save()
 
 
+@given('New virtual machine with name "{vmName}" is created')
+@when('New virtual machine with name "{vmName}" is created')
+def step_impl(context, vmName):
+    try:
+        VirtualMachine(
+            name=vmName,
+            resourceGroup=context.rgroup,
+            subscription=context.subscription).save()
+    except Exception:
+        context.error = True
+
+
 @given('Virtual machines are queried in the subscription')
 def step_impl(context):
     client = context.clients.get('vm')
@@ -47,12 +59,26 @@ def step_impl(context):
         context.response = client.virtual_machines.list(context.rgroup)
 
 
-@given('Virtual machine with name "{name}" is queried')
-def step_impl(context, name):
+@given('Virtual machine with name "{vmName}" is queried')
+@when('Virtual machine with name "{vmName}" is queried')
+def step_impl(context, vmName):
     client = context.clients.get('vm')
     with context.proxy:
         try:
-            context.response = client.virtual_machines.get(context.rgroup, name)
+            context.response = client.virtual_machines\
+                                     .get(context.rgroup, vmName)
+        except ResourceNotFoundError:
+            context.error = True
+
+
+@then('Virtual machine with name "{vmName}" is deleted')
+@given('Virtual machine with name "{vmName}" is deleted')
+def step_impl(context, vmName):
+    client = context.clients.get('vm')
+    with context.proxy:
+        try:
+            context.response = client.virtual_machines\
+                                     .begin_delete(context.rgroup, vmName)
         except ResourceNotFoundError:
             context.error = True
 
@@ -60,23 +86,25 @@ def step_impl(context, name):
 @then('Return an empty list of virtual machines')
 def step_impl(context):
     with context.proxy:
-        print(context.response)
         assert len([item for item in context.response]) == 0
 
 
 @then('Return a list of existing virtual machines')
 def step_impl(context):
     with context.proxy:
-        print(context.response)
-        print(context.subscription, VirtualMachine.objects.all())
         assert len([item for item in context.response]) > 0
 
 
-@then('Return information for a virtual machine with name "{name}"')
-def step_impl(context, name):
-    assert context.response.name == name
+@then('Return information for virtual machine with name "{vmName}"')
+def step_impl(context, vmName):
+    assert context.response.name == vmName
 
 
+@then('Raise an exception')
 @then('Raise a ResourceNotFoundError')
+@then('Virtual machine is silently deleted')
 def step_impl(context):
-    assert context.error
+    assert (
+        context.error if hasattr(context, 'error')
+        else context.response.status() == 'Succeeded'
+    )
