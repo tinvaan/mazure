@@ -88,6 +88,17 @@ class TestVirtualMachineViews(unittest.TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.get_json().get('value')), 2)
 
+    def test_create_or_update(self):
+        url = '%s/resourceGroups/testrg/%s/test-vm' % (self.url, self.provider)
+        r = self.app.put(url)
+        self.assertEqual(r.status_code, 400)
+
+        r = self.app.put(
+            url, json={'location': 'eastus', 'tags': [{'foo': 'bar'}]})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.get_json().get('name'), 'test-vm')
+        self.assertEqual(r.get_json().get('location'), 'eastus')
+
     def tearDown(self):
         self.db.drop_collection('resources')
         self.db.client.drop_database(self.db.name)
