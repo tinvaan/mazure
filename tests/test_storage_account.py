@@ -1,6 +1,8 @@
 
 import os
 import vcr
+import uuid
+import secrets
 import unittest
 
 from mongoengine.errors import NotUniqueError
@@ -54,12 +56,12 @@ class TestStorageAccounts(unittest.TestCase):
 class TestStorageAccountProxy(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.subscription = str(uuid.uuid4())
         cls.creds = ClientSecretCredential(
-            tenant_id=os.environ.get('AZURE_TENANT_ID'),
-            client_id=os.environ.get('AZURE_CLIENT_ID'),
-            client_secret=os.environ.get('AZURE_SECRET_KEY'))
-        cls.client = StorageManagementClient(
-            cls.creds, os.environ.get('AZURE_SUBSCRIPTION_ID'))
+            tenant_id=str(uuid.uuid4()),
+            client_id=str(uuid.uuid4()),
+            client_secret=secrets.token_urlsafe())
+        cls.client = StorageManagementClient(cls.creds, cls.subscription)
 
     def setUp(self):
         self.assertIsNotNone(self.creds)
