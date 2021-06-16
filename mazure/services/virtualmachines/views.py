@@ -107,3 +107,19 @@ def create_or_update(subId, rgroup, vmName):
                 'message': 'Incorrect parameter values provided for create'
             }
         }), 400)
+
+
+@vm.route('%s/%s/<vmName>' % (prefix, provider), methods=['DELETE'])
+def delete_virtual_machine(subId, rgroup, vmName):
+    """
+    The operation to delete a virtual machine
+
+    Ref: https://docs.microsoft.com/en-us/rest/api/compute/virtual-machines/delete
+    """
+    try:
+        machine = VirtualMachine.objects.get(
+            name=vmName, subscription=subId, resourceGroup=rgroup)
+        machine.delete()
+        return jsonify(loads(machine.to_json()))
+    except VirtualMachine.DoesNotExist:
+        return ('', 204)
