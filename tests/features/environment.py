@@ -1,6 +1,6 @@
 
-import os
 import uuid
+import secrets
 
 from azure.identity import ClientSecretCredential
 from azure.mgmt.storage import StorageManagementClient
@@ -53,9 +53,9 @@ def before_all(context):
     context.clients = dict()
     context.proxy = AzureProxy()
     creds = ClientSecretCredential(
-        tenant_id=os.environ.get('AZURE_TENANT_ID'),
-        client_id=os.environ.get('AZURE_CLIENT_ID'),
-        client_secret=os.environ.get('AZURE_SECRET_KEY'))
+        tenant_id=str(uuid.uuid4()),
+        client_id=str(uuid.uuid4()),
+        client_secret=secrets.token_urlsafe())
 
     context.rgroup = group
     context.subscription = subscription
