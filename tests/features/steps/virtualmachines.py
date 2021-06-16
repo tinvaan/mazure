@@ -1,5 +1,6 @@
 
 from behave import given, then
+from azure.core.exceptions import ResourceNotFoundError
 
 from mazure.services.virtualmachines.models import VirtualMachine
 
@@ -46,6 +47,16 @@ def step_impl(context):
         context.response = client.virtual_machines.list(context.rgroup)
 
 
+@given('Virtual machine with name "{name}" is queried')
+def step_impl(context, name):
+    client = context.clients.get('vm')
+    with context.proxy:
+        try:
+            context.response = client.virtual_machines.get(context.rgroup, name)
+        except ResourceNotFoundError:
+            context.error = True
+
+
 @then('Return an empty list of virtual machines')
 def step_impl(context):
     with context.proxy:
@@ -59,3 +70,13 @@ def step_impl(context):
         print(context.response)
         print(context.subscription, VirtualMachine.objects.all())
         assert len([item for item in context.response]) > 0
+
+
+@then('Return information for a virtual machine with name "{name}"')
+def step_impl(context, name):
+    assert context.response.name == name
+
+
+@then('Raise a ResourceNotFoundError')
+def step_impl(context):
+    assert context.error
