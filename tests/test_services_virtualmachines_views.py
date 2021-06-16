@@ -99,6 +99,20 @@ class TestVirtualMachineViews(unittest.TestCase):
         self.assertEqual(r.get_json().get('name'), 'test-vm')
         self.assertEqual(r.get_json().get('location'), 'eastus')
 
+    def test_delete_vm(self):
+        url = '%s/resourceGroups/testrg/%s/foo-vm' % (self.url, self.provider)
+        r = self.app.delete(url)
+        self.assertEqual(r.status_code, 204)
+
+        url = '%s/resourceGroups/testrg/%s/first-vm' % (self.url, self.provider)
+        r = self.app.delete(url)
+        self.assertEqual(r.status_code, 200)
+        with self.assertRaises(VirtualMachine.DoesNotExist):
+            VirtualMachine.objects.get(
+                name='first-vm',
+                subscription=self.env.subscription,
+                resourceGroup=self.env.rgroup)
+
     def tearDown(self):
         self.db.drop_collection('resources')
         self.db.client.drop_database(self.db.name)
