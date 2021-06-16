@@ -1,5 +1,6 @@
 
 from json import loads
+from mongoengine.errors import ValidationError
 from flask import Blueprint, request, jsonify, make_response
 
 from .models import VirtualMachine
@@ -79,3 +80,30 @@ def list_vms_per_subscription(subId):
     # TODO: Add pagination(nextLink) support
     machines = VirtualMachine.objects.filter(subscription=subId).to_json()
     return jsonify({'value': loads(machines)})
+
+
+@vm.route('%s/%s/<vmName>' % (prefix, provider), methods=['PUT'])
+def create_or_update(subId, rgroup, vmName):
+    """
+    The operation to create or update a virtual machine
+
+    Ref: https://docs.microsoft.com/en-us/rest/api/compute/virtual-machines/create-or-update
+    """
+    try:
+        data = request.get_json(force=True)
+        data.update({
+            'name': vmName,
+            'subscription': subId,
+            'resourceGroup': rgroup,
+            'provisioningState': 'Creating'
+        })
+        machine = VirtualMachine(**data)
+        machine.save()
+        return jsonify(loads(machine.to_json()))
+    except ValidationError:
+        return make_response(jsonify({
+            'error': {
+                'code': 'InvalidParameters',
+                'message': 'Incorrect parameter values provided for create'
+            }
+        }), 400)
