@@ -1,5 +1,6 @@
 
-import os
+import uuid
+import secrets
 import unittest
 
 from azure.identity import ClientSecretCredential
@@ -10,18 +11,19 @@ from mazure.proxy import AzureProxy
 from mazure.services.virtualmachines.models import VirtualMachine
 
 
+subscription = str(uuid.uuid4())
 vms = [
     {
         'name': 'first-vm',
         'location': 'eastus',
         'resourceGroup': 'testrg',
-        'subscription': os.environ.get('AZURE_SUBSCRIPTION_ID')
+        'subscription': subscription
     },
     {
         'name': 'second-vm',
         'location': 'eastus',
         'resourceGroup': 'testrg',
-        'subscription': os.environ.get('AZURE_SUBSCRIPTION_ID')
+        'subscription': subscription
     }
 ]
 
@@ -29,16 +31,14 @@ vms = [
 class TestVirtualMachineProxy(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.subscription = subscription
         cls.creds = ClientSecretCredential(
-            tenant_id=os.environ.get('AZURE_TENANT_ID'),
-            client_id=os.environ.get('AZURE_CLIENT_ID'),
-            client_secret=os.environ.get('AZURE_SECRET_KEY'))
-        cls.client = ComputeManagementClient(
-            cls.creds, os.environ.get('AZURE_SUBSCRIPTION_ID'))
+            tenant_id=str(uuid.uuid4()),
+            client_id=str(uuid.uuid4()),
+            client_secret=secrets.token_urlsafe())
+        cls.client = ComputeManagementClient(cls.creds, cls.subscription)
 
     def setUp(self):
-        self.assertIsNotNone(self.creds)
-        self.assertIsNotNone(self.client)
         for vm in vms:
             VirtualMachine(**vm).save()
 
@@ -65,8 +65,7 @@ class TestVirtualMachineProxy(unittest.TestCase):
             machines = self.client.virtual_machines.list_all()
             self.assertEqual(len(list(machines)), 2)
             for vm in machines:
-                self.assertEqual(
-                    vm.subscription, os.environ.get('AZURE_SUBSCRIPTION_ID'))
+                self.assertEqual(vm.subscription, self.subscription)
 
     def test_list_vms_per_rg(self):
         with AzureProxy():
