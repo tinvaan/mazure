@@ -7,8 +7,7 @@ from azure.identity import ClientSecretCredential
 from azure.mgmt.compute import ComputeManagementClient
 from azure.core.exceptions import ResourceNotFoundError
 
-from mazure import mazure
-from mazure.proxy import AzureProxy
+from mazure import mazure, Mazure
 from mazure.services.virtualmachines.models import VirtualMachine
 
 
@@ -44,7 +43,7 @@ class TestVirtualMachineProxy(unittest.TestCase):
             VirtualMachine(**vm).save()
 
     def test_get_vm_info(self):
-        with AzureProxy():
+        with Mazure():
             vm = self.client.virtual_machines.get(
                 resource_group_name='testrg', vm_name='first-vm')
             self.assertIsNotNone(vm)
@@ -52,24 +51,24 @@ class TestVirtualMachineProxy(unittest.TestCase):
                 self.client.virtual_machines.get(
                     resource_group_name='testrg', vm_name='third-vm')
 
-    @unittest.skip("FIXME: Raises a ClientAuthentication error")
     def test_get_vm_instance_view(self):
-        vm = self.client.virtual_machines.instance_view(
-            resource_group_name='testrg', vm_name='first-vm')
-        self.assertIsNotNone(vm)
-        with self.assertRaises(ResourceNotFoundError):
-            self.client.virtual_machines.instance_view(
-                resource_group_name='newrg', vm_name='first-vm')
+        with Mazure():
+            vm = self.client.virtual_machines.instance_view(
+                resource_group_name='testrg', vm_name='first-vm')
+            self.assertIsNotNone(vm)
+            with self.assertRaises(ResourceNotFoundError):
+                self.client.virtual_machines.instance_view(
+                    resource_group_name='newrg', vm_name='first-vm')
 
     def test_list_all_vms(self):
-        with AzureProxy():
+        with Mazure():
             machines = self.client.virtual_machines.list_all()
             self.assertEqual(len(list(machines)), 2)
             for vm in machines:
                 self.assertEqual(vm.subscription, self.subscription)
 
     def test_list_vms_per_rg(self):
-        with AzureProxy():
+        with Mazure():
             machines = self.client.virtual_machines\
                                   .list(resource_group_name='xyz')
             self.assertEqual(len(list(machines)), 0)
@@ -108,7 +107,6 @@ class TestVirtualMachineProxyDecorator(unittest.TestCase):
                 resource_group_name='testrg', vm_name='third-vm')
 
     @mazure
-    @unittest.skip("FIXME: Raises a ClientAuthentication error")
     def test_get_vm_instance_view(self):
         vm = self.client.virtual_machines.instance_view(
             resource_group_name='testrg', vm_name='first-vm')

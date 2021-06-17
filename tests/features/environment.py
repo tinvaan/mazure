@@ -6,7 +6,7 @@ from azure.identity import ClientSecretCredential
 from azure.mgmt.storage import StorageManagementClient
 from azure.mgmt.compute import ComputeManagementClient
 
-from mazure.proxy import AzureProxy
+from mazure import Mazure
 from mazure.services.storageaccounts.models import StorageAccount
 from mazure.services.virtualmachines.models import VirtualMachine
 
@@ -51,7 +51,7 @@ accounts = [
 
 def before_all(context):
     context.clients = dict()
-    context.proxy = AzureProxy()
+    context.proxy = Mazure()
     creds = ClientSecretCredential(
         tenant_id=str(uuid.uuid4()),
         client_id=str(uuid.uuid4()),

@@ -10,8 +10,7 @@ from azure.mgmt.storage.models import (
     StorageAccountCheckNameAvailabilityParameters
 )
 
-from mazure import mazure
-from mazure.proxy import AzureProxy
+from mazure import mazure, Mazure
 from mazure.services.storageaccounts.models import StorageAccount
 
 
@@ -54,7 +53,7 @@ class TestStorageAccountProxy(unittest.TestCase):
             StorageAccount(**account).save()
 
     def test_list_storage_accounts(self):
-        with AzureProxy():
+        with Mazure():
             sas = self.client.storage_accounts.list()
             self.assertEqual(len([sa for sa in sas]), 3)
             for sa in sas:
@@ -63,14 +62,14 @@ class TestStorageAccountProxy(unittest.TestCase):
     def test_check_storage_account_name(self):
         valid = StorageAccountCheckNameAvailabilityParameters(name='foobarsa')
         invalid = StorageAccountCheckNameAvailabilityParameters(name='testkit')
-        with AzureProxy():
+        with Mazure():
             self.assertTrue(self.client.storage_accounts
                             .check_name_availability(valid).name_available)
             self.assertTrue(self.client.storage_accounts
                             .check_name_availability(invalid).name_available)
 
     def test_create_storage_account(self):
-        with AzureProxy():
+        with Mazure():
             kws = {
                 "sku": {"name": "Premium_LRS"},
                 "kind": "BlockBlobStorage",
@@ -88,7 +87,7 @@ class TestStorageAccountProxy(unittest.TestCase):
                     resourceGroup='testrg', name='testaccount').count(), 1)
 
     def test_delete_storage_account(self):
-        with AzureProxy():
+        with Mazure():
             self.client.storage_accounts.delete(
                 account_name='testaccount', resource_group_name='testrg')
             self.assertEqual(StorageAccount.objects(
