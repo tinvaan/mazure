@@ -52,7 +52,7 @@ def check_storage_account_name(subId):
         return jsonify({
             'nameAvailable': False,
             'reason': 'AlreadyExists',
-            'message': 'The storage account named rampupsa is already taken.'
+            'message': 'The storage account named %s is already taken.' % params.get('name')
         })
     except AssertionError as err:
         return make_response(jsonify({'error': str(err)}), 400)
