@@ -2,6 +2,7 @@
 import re
 import json
 import responses
+import functools
 
 from .services import app
 
@@ -56,3 +57,11 @@ class AzureProxy:
             dict(response.headers),
             json.dumps(response.get_json())
         )
+
+
+def mazure(func):
+    @functools.wraps(func)
+    def interface(*args, **kwargs):
+        with AzureProxy():
+            func(*args, **kwargs)
+    return interface
