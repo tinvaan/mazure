@@ -36,13 +36,43 @@ def step_impl(context):
 @given('New virtual machine with name "{vmName}" is created')
 @when('New virtual machine with name "{vmName}" is created')
 def step_impl(context, vmName):
-    try:
-        VirtualMachine(
-            name=vmName,
-            resourceGroup=context.rgroup,
-            subscription=context.subscription).save()
-    except Exception:
-        context.error = True
+    client = context.clients.get('vm')
+    with context.proxy:
+        vmParams = {
+            "location": "eastus",
+            "storage_profile": {
+                "image_reference": {
+                    "publisher": 'Canonical',
+                    "offer": "UbuntuServer",
+                    "sku": "16.04.0-LTS",
+                    "version": "latest"
+                }
+            },
+            "hardware_profile": {
+                "vm_size": "Standard_DS1_v2"
+            },
+            "os_profile": {
+                "computer_name": "test-pc",
+                "admin_username": "foo",
+                "admin_password": "bar"
+            },
+            "network_profile": {
+                "network_interfaces": [
+                    {
+                        "id": f"/subscriptions/{context.subscription}/resourceGroups/{context.rgroup}/providers/Microsoft.Network/networkInterfaces/test-nic",
+                        "properties": {
+                            "primary": True
+                        }
+                    }
+                ]
+            }
+        }
+        try:
+            context.response = client\
+                .virtual_machines\
+                .begin_create_or_update(context.rgroup, vmName, vmParams)
+        except Exception:
+            context.error = True
 
 
 @given('Virtual machines are queried in the subscription')
