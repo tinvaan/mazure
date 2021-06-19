@@ -7,6 +7,7 @@ DB_ALIASES = {
     'vm': 'virtualmachine'
 }
 
+ALLOW_AZURE_REQUESTS = False
 AZURE_API_VERSION = '2021-01-01'
 
 MAZURE_PORT = 5050
