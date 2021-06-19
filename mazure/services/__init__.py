@@ -1,16 +1,26 @@
 
 from flask import Flask
+from collections import namedtuple
 
+from .utils import bp
+
+
+anchor = __name__
+prefix = '/subscriptions'
 
 app = Flask('mazure', instance_relative_config=True)
 app.config.from_object('mazure.config')
 app.config.from_pyfile('config.py', silent=True)
 
-with app.app_context():
-    from .identity.views import auth
-    from .storageaccounts.views import sa
-    from .virtualmachines.views import vm
-
-    app.register_blueprint(auth)
-    app.register_blueprint(sa, url_prefix='/subscriptions')
-    app.register_blueprint(vm, url_prefix='/subscriptions')
+service = namedtuple('service', ['property', 'blueprint', 'prefix'])
+services = dict(
+    auth=[
+        service('identity', bp(app, 'identity', anchor), None)
+    ],
+    compute=[
+        service('virtual_machines', bp(app, 'virtualmachines', anchor), prefix)
+    ],
+    storage=[
+        service('storage_accounts', bp(app, 'storageaccounts', anchor), prefix)
+    ]
+)
