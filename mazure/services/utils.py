@@ -1,6 +1,5 @@
 
 from flask import Blueprint
-from inspect import isfunction
 from importlib import import_module
 
 from .exceptions import NotSupported
@@ -37,15 +36,14 @@ def endpoints(args, services):
     result = list()
     names = combine(services)
     supported = sum(services.values(), list())
-    targets = [arg for arg in args if not isfunction(arg)]
 
-    if len(targets) == 0:
+    if len(args) == 0:
         return supported
 
-    if not set(targets).issubset(set(names)):
-        raise NotSupported(set(targets).difference(set(names)))
+    if not set(args).issubset(set(names)):
+        raise NotSupported(set(args).difference(set(names)))
 
-    for target in targets:
+    for target in args:
         if target not in services.keys():
             for service in supported:
                 if service.property == target:

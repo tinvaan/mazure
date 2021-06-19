@@ -3,7 +3,8 @@ import re
 import json
 import responses
 
-from .services import app
+from .services import app, services
+from .services.utils import endpoints, register
 
 
 class Mazure:
@@ -13,13 +14,15 @@ class Mazure:
     ]
     METHODS = ["GET", "PUT", "POST", "PATCH", "DELETE"]
 
-    def __init__(self):
+    def __init__(self, targets=[]):
+        self.targets = targets
         self.http = responses.mock
         self.client = app.test_client()
         self.host = 'http://%s:%s' % (
             app.config.get('MAZURE_SERVER'), app.config.get('MAZURE_PORT'))
 
     def __enter__(self, *args, **kwargs):
+        register(app, list(endpoints(self.targets, services)))
         self.setup()
 
     def __exit__(self, *args, **kwargs):

@@ -1,16 +1,16 @@
 
+import inspect
 import functools
 
 from .proxy import Mazure
-from .services import app, services
-from .services.utils import endpoints, register
+from .services import app
 
 
 def mazure(*fargs, **fkwargs):
     def interface(func):
         @functools.wraps(func)
         def action(*args, **kwargs):
-            with Mazure():
+            with Mazure(targets):
                 func(*args, **kwargs)
         return action
 
@@ -20,5 +20,5 @@ def mazure(*fargs, **fkwargs):
         'AZURE_API_VERSION': fkwargs.get('version', api_version),
         'ALLOW_AZURE_REQUESTS': fkwargs.get('allow', allow_live)
     })
-    register(app, list(endpoints(fargs, services)))
+    targets = [arg for arg in fargs if not inspect.isfunction(arg)]
     return interface
