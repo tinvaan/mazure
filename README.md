@@ -1,5 +1,7 @@
 # Mazure - [Moto](https://github.com/spulec/moto) for Azure
 
+[![Build Status](https://cloud.drone.io/api/badges/tinvaan/mazure/status.svg)](https://cloud.drone.io/tinvaan/mazure)
+
 A library that allows you to mock Azure services.
 
 ## Installation
