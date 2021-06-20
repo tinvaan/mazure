@@ -5,6 +5,7 @@ from mongoengine import get_db, connect, disconnect
 
 from .loader import Env
 from mazure.services import app
+from mazure.services.utils import register, services
 from mazure.services.virtualmachines.models import VirtualMachine
 
 
@@ -27,6 +28,7 @@ vms = [
 class TestVirtualMachineViews(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        register(app, services(app, ['compute']))
         app.config['TESTING'] = True
         cls.app = app.test_client()
         cls.conn = connect(

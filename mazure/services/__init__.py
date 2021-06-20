@@ -2,25 +2,35 @@
 from flask import Flask
 from collections import namedtuple
 
-from .utils import bp
+from .utils import blueprint
 
 
-anchor = __name__
-prefix = '/subscriptions'
+service = namedtuple('service', ['prefix', 'property', 'blueprint'])
 
 app = Flask('mazure', instance_relative_config=True)
 app.config.from_object('mazure.config')
 app.config.from_pyfile('config.py', silent=True)
 
-service = namedtuple('service', ['property', 'blueprint', 'prefix'])
-services = dict(
+app.config['services'] = dict(
     auth=[
-        service('identity', bp(app, 'identity', anchor), None)
+        service(
+            None,
+            'identity',
+            blueprint(app, 'identity')
+        )
     ],
     compute=[
-        service('virtual_machines', bp(app, 'virtualmachines', anchor), prefix)
+        service(
+            '/subscriptions',
+            'virtual_machine',
+            blueprint(app, 'virtualmachines')
+        )
     ],
     storage=[
-        service('storage_accounts', bp(app, 'storageaccounts', anchor), prefix)
+        service(
+            '/subscriptions',
+            'storage_accounts',
+            blueprint(app, 'storageaccounts')
+        )
     ]
 )

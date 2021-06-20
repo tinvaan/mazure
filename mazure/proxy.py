@@ -3,8 +3,8 @@ import re
 import json
 import responses
 
-from .services import app, services
-from .services.utils import endpoints, register
+from . import app
+from .services.utils import services, register
 
 
 class Mazure:
@@ -22,13 +22,13 @@ class Mazure:
             app.config.get('MAZURE_SERVER'), app.config.get('MAZURE_PORT'))
 
     def __enter__(self, *args, **kwargs):
-        register(app, list(endpoints(self.targets, services)))
         self.setup()
 
     def __exit__(self, *args, **kwargs):
         self.cleanup()
 
     def setup(self):
+        register(app, services(app, self.targets))
         self.http.start()
         for method in self.METHODS:
             for host in self.HOSTS:

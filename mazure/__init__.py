@@ -2,8 +2,8 @@
 import inspect
 import functools
 
-from .proxy import Mazure
 from .services import app
+from .proxy import Mazure
 
 
 def mazure(*fargs, **fkwargs):

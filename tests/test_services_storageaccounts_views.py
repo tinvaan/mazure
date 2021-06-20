@@ -5,12 +5,14 @@ from mongoengine import get_db, connect, disconnect
 
 from .loader import Env
 from mazure.services import app
+from mazure.services.utils import register, services
 from mazure.services.storageaccounts.models import StorageAccount
 
 
 class TestStorageAccountViews(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        register(app, services(app, ['storage']))
         app.config['TESTING'] = True
         cls.app = app.test_client()
         cls.conn = connect(
