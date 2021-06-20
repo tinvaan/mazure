@@ -46,7 +46,6 @@ class TestMazureDecorator(unittest.TestCase):
         )
 
     @mazure('compute')
-    @unittest.skip('FIXME: Should not go through')
     def test_invalid_arg_decorator(self):
         with self.assertRaises(ClientAuthenticationError):
             self.assertListEqual(
@@ -54,7 +53,6 @@ class TestMazureDecorator(unittest.TestCase):
             )
 
     @mazure('storage', allow=True)
-    @unittest.skip('TODO: Implement passthru logic')
     def test_invalid_arg_with_passthru(self):
         with self.assertRaises(ClientAuthenticationError):
             self.assertListEqual(
@@ -70,6 +68,7 @@ class TestMazureDecorator(unittest.TestCase):
             )
 
     def tearDown(self):
+        app.blueprints.clear()
         app.config.update({'ALLOW_AZURE_REQUESTS': False})
 
 

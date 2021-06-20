@@ -1,7 +1,11 @@
 
 import re
 import json
+import requests
 import responses
+
+from urllib.parse import urlparse
+from werkzeug.exceptions import NotFound
 
 from . import app
 from .services.utils import services, register
@@ -22,13 +26,13 @@ class Mazure:
             app.config.get('MAZURE_SERVER'), app.config.get('MAZURE_PORT'))
 
     def __enter__(self, *args, **kwargs):
+        register(app, services(app, self.targets))
         self.setup()
 
     def __exit__(self, *args, **kwargs):
         self.cleanup()
 
     def setup(self):
-        register(app, services(app, self.targets))
         self.http.start()
         for method in self.METHODS:
             for host in self.HOSTS:
@@ -42,7 +46,19 @@ class Mazure:
         self.http.stop()
         self.http.reset()
 
+    def routable(self, path, method):
+        try:
+            return app.url_map.bind(app.config.get('MAZURE_SERVER'))\
+                              .match(path, method) is not None
+        except NotFound:
+            return False
+
     def callback(self, request):
+        if not self.routable(urlparse(request.url).path, request.method):
+            if not app.config.get('ALLOW_AZURE_REQUESTS'):
+                raise NotImplementedError()
+            return requests.session().send(request)
+
         if request.method == 'GET':
             response = self.client.get(self.host + request.path_url)
         if request.method == 'DELETE':
