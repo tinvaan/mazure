@@ -7,7 +7,7 @@ import responses
 from urllib.parse import urlparse
 from werkzeug.exceptions import NotFound
 
-from . import app
+from .services import app
 from .services.utils import services, register
 
 
@@ -18,14 +18,20 @@ class Mazure:
     ]
     METHODS = ["GET", "PUT", "POST", "PATCH", "DELETE"]
 
-    def __init__(self, targets=[]):
+    def __init__(self, targets=[], allow=None):
         self.targets = targets
+        self.allow = allow or app.config.get('ALLOW_AZURE_REQUESTS')
+        app.config.update({'ALLOW_AZURE_REQUESTS': self.allow})
+
         self.http = responses.mock
         self.client = app.test_client()
         self.host = 'http://%s:%s' % (
             app.config.get('MAZURE_SERVER'), app.config.get('MAZURE_PORT'))
 
     def __enter__(self, *args, **kwargs):
+        self.allow = kwargs.get(
+            'allow', app.config.get('ALLOW_AZURE_REQUESTS'))
+        app.config.update({'ALLOW_AZURE_REQUESTS': self.allow})
         register(app, services(app, self.targets))
         self.setup()
 
@@ -55,9 +61,11 @@ class Mazure:
 
     def callback(self, request):
         if not self.routable(urlparse(request.url).path, request.method):
-            if not app.config.get('ALLOW_AZURE_REQUESTS'):
-                raise NotImplementedError()
-            return requests.session().send(request)
+            if self.allow:
+                self.http.add_passthru(request.url)
+                r = requests.session().send(request)
+                return (r.status_code, dict(r.headers), r.content)
+            raise NotImplementedError()
 
         if request.method == 'GET':
             response = self.client.get(self.host + request.path_url)
