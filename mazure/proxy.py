@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 from werkzeug.exceptions import NotFound
 
 from .services import app
+from .services.exceptions import NotSupported
 from .services.utils import services, register
 
 
@@ -65,7 +66,7 @@ class Mazure:
                 self.http.add_passthru(request.url)
                 r = requests.session().send(request)
                 return (r.status_code, dict(r.headers), r.content)
-            raise NotImplementedError()
+            raise NotSupported('"%s" is not supported' % request.url)
 
         if request.method == 'GET':
             response = self.client.get(self.host + request.path_url)
