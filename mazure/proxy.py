@@ -2,10 +2,11 @@
 import re
 import json
 import requests
-import responses
 
 from urllib.parse import urlparse
 from werkzeug.exceptions import NotFound
+
+from packages import responses
 
 from .services import app
 from .services.exceptions import NotSupported
