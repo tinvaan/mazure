@@ -26,6 +26,13 @@ app.config['services'] = dict(
             blueprint(app, 'virtualmachines')
         )
     ],
+    resources=[
+        service(
+            '/subscriptions',
+            'resource_groups',
+            blueprint(app, 'resourcegroups')
+        )
+    ],
     storage=[
         service(
             '/subscriptions',

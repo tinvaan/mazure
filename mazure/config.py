@@ -4,7 +4,8 @@ MONGODB_HOST = 'mongomock://localhost'
 
 DB_ALIASES = {
     'sa': 'storageaccount',
-    'vm': 'virtualmachine'
+    'vm': 'virtualmachine',
+    'rg': 'resourcegroup'
 }
 
 ALLOW_AZURE_REQUESTS = False
