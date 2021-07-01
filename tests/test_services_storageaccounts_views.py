@@ -65,7 +65,7 @@ class TestStorageAccountViews(unittest.TestCase):
         pass
 
     def tearDown(self):
-        self.db.drop_collection('resources')
+        self.db.drop_collection('storageaccounts')
         self.db.client.drop_database(self.db.name)
 
     @classmethod

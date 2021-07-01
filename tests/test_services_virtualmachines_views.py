@@ -116,7 +116,7 @@ class TestVirtualMachineViews(unittest.TestCase):
                 resourceGroup=self.env.rgroup)
 
     def tearDown(self):
-        self.db.drop_collection('resources')
+        self.db.drop_collection('virtualmachines')
         self.db.client.drop_database(self.db.name)
 
     @classmethod
