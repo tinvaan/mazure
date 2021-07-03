@@ -18,7 +18,7 @@ class Mazure:
         "https://management.azure.com",
         "https://login.microsoftonline.com"
     ]
-    METHODS = ["GET", "PUT", "POST", "PATCH", "DELETE"]
+    METHODS = ["HEAD", "GET", "PUT", "POST", "PATCH", "DELETE"]
 
     def __init__(self, targets=[], allow=None):
         self.targets = targets
@@ -69,19 +69,10 @@ class Mazure:
                 return (r.status_code, dict(r.headers), r.content)
             raise NotSupported('"%s" is not supported' % request.url)
 
-        if request.method == 'GET':
-            response = self.client.get(self.host + request.path_url)
-        if request.method == 'DELETE':
-            response = self.client.delete(self.host + request.path_url)
-        if request.method == 'POST':
-            response = self.client.post(
-                self.host + request.path_url, data=request.body)
-        if request.method == 'PUT':
-            response = self.client.put(
-                self.host + request.path_url, data=request.body)
-
+        response = getattr(self.client, request.method.lower())(
+            self.host + request.path_url, data=request.body)
         return (
             response.status_code,
             dict(response.headers),
-            json.dumps(response.get_json())
+            json.dumps(response.get_json()) if response.data else response.data
         )
