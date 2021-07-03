@@ -69,6 +69,16 @@ class TestResourceGroupViews(unittest.TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertIsNotNone(ResourceGroup.objects.get(name='testrg'))
 
+    def test_update_resource_group(self):
+        r = self.app.patch(self.url + '/rg1', json={
+            'tags': {'new': 'tag', 'foo': 'bar', 'baz': 'bah'}
+        })
+        self.assertEqual(r.status_code, 200)
+        self.assertDictEqual(
+            r.get_json().get('tags'),
+            ResourceGroup.objects.get(name='rg1').tags
+        )
+
     def test_delete_resource_group(self):
         r = self.app.delete(self.url + '/foo')
         self.assertEqual(r.status_code, 200)

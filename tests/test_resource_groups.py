@@ -193,3 +193,7 @@ class TestResourceGroupProxyDecorator(unittest.TestCase):
         self.assertDictEqual(group.tags, patch.tags)
         with self.assertRaises(ResourceNotFoundError):
             self.client.resource_groups.update('foobar', patch)
+
+
+if __name__ == '__main__':
+    unittest.main()
