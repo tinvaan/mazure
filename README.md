@@ -145,6 +145,7 @@ With both the decorator and the context manager, Mazure allows you some fine tun
 ## Supported Azure Services
 
 `Mazure` is still very much a work in progress and aims to eventually implement the basic functionality of some of the most commonly used Azure services. At present, `Mazure` is able to mock the <em><strong>basic</strong></em> functionality of the below mentioned services.
+- Resource groups
 - Storage accounts
 - Virtual machines
 
