@@ -19,6 +19,13 @@ app.config['services'] = dict(
             blueprint(app, 'identity')
         )
     ],
+    cosmosdb=[
+        service(
+            '/dbs',
+            'cosmos_db',
+            blueprint(app, 'cosmosdb')
+        )
+    ],
     compute=[
         service(
             '/subscriptions',

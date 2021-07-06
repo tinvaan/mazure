@@ -16,7 +16,8 @@ from .services.utils import services, register
 class Mazure:
     HOSTS = [
         "https://management.azure.com",
-        "https://login.microsoftonline.com"
+        "https://login.microsoftonline.com",
+        "https://(.*\.)?documents.azure.com"
     ]
     METHODS = ["HEAD", "GET", "PUT", "POST", "PATCH", "DELETE"]
 
