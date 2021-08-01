@@ -4,6 +4,9 @@
 
 A library that allows you to mock Azure services.
 
+[![Demo](screenshots/mazure-demo.jpg)](https://www.youtube.com/watch?v=WCLCNlima0M)
+
+
 ## Installation
 ```bash
 $ pip install --editable .
